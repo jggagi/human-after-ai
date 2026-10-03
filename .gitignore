@@ -1,0 +1,32 @@
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Credentials and local overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+secrets/
+.local/
+
+# Generated outputs (no runtime is selected yet)
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+dist/
+build/
+coverage/
+*.log
+
+# Local bootstrap artifacts
+.publish-receipt.json
