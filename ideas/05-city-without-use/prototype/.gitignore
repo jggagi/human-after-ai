@@ -1,0 +1,8 @@
+node_modules/
+.sites-runtime/
+*.tar.gz
+test-results/
+
+# This prototype's dist directory is handwritten game source, not generated output.
+!dist/
+!dist/**

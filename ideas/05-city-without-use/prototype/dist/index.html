@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102e32">
+  <meta name="description" content="AI 已经接手大部分工作。许立想再次被需要，丁禾今天不想找工作。扮演即将失去岗位的周行，回应介绍所最后两位来访者。">
+  <title>无用之城 · 最后两份记录</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <main id="game" aria-label="无用之城剧情游戏">
+    <div class="scene-art" role="img" aria-label="雨后的职业介绍所，许立站在借还箱旁，丁禾坐在窗边。"></div>
+    <div class="scene-shade"></div>
+    <header class="topbar">
+      <a class="wordmark" href="#" id="home-link" aria-label="无用之城，回到标题画面">无用之城<span>一个下午的故事</span></a>
+      <div class="scene-clock" id="scene-clock"><span>介绍所</span><strong>星期三 · 15:20</strong></div>
+      <nav class="toolbar" aria-label="游戏工具">
+        <button id="sound-toggle" class="tool-button" aria-pressed="false" aria-label="开启雨声"><span aria-hidden="true">♬</span><span class="tool-label" id="sound-label">雨声关</span></button>
+        <button id="people-toggle" class="tool-button" aria-label="查看人物与关系" aria-expanded="false"><span aria-hidden="true">人</span><span class="tool-label">人物</span></button>
+        <button id="notebook-toggle" class="tool-button" aria-label="查看工作记录" aria-expanded="false"><span aria-hidden="true">▤</span><span class="tool-label">记录</span></button>
+      </nav>
+    </header>
+
+    <section id="title-screen" class="title-screen">
+      <div class="title-content">
+        <p class="eyebrow">第一幕 · 最后两份记录</p>
+        <h1>无用<span>之城</span></h1>
+        <p class="title-copy">AI 已经接手了大部分工作。<br>许立想被需要；丁禾今天不想找工作。<br><br>你是职业介绍员周行，要回应他们的请求。<br>周五以后，你自己的岗位也将结束。</p>
+        <button id="start-button" class="primary-button">走进介绍所<span class="button-mark" aria-hidden="true">✦</span></button>
+        <p class="start-hint">一段短篇 · 阅读对话，决定怎样回应</p>
+      </div>
+      <div class="title-note"><span>门口的纸条</span><p>职业业务至本周五结束。<br>住房和生活保障不受影响。</p></div>
+      <p class="version-note">故事与交互提案 · DEMO 03</p>
+    </section>
+
+    <section id="play-screen" class="play-screen" hidden>
+      <div class="chapter-label"><span id="chapter-number">01</span><div><p id="chapter-name">来访者</p><p id="chapter-location">职业介绍所 · 大厅</p></div></div>
+      <div id="object-controls" class="object-controls" aria-label="观察大厅" hidden>
+        <span>看一看</span>
+        <button data-object="chair">窗边的椅子</button>
+        <button data-object="boxes">工具箱</button>
+        <button data-object="roster">未安置名单</button>
+      </div>
+      <div class="dialogue-wrap">
+        <div id="scene-caption" class="scene-caption" hidden></div>
+        <section class="dialogue-panel" id="dialogue-panel" aria-label="当前对话" tabindex="-1">
+          <div class="speaker-row"><button id="speaker" class="speaker-name" aria-label="查看周行的人物介绍">周行</button><span id="speaker-role">职业介绍员 · 你</span></div>
+          <div id="intro-context" class="intro-context" hidden></div>
+          <div id="dialogue-text" class="dialogue-text" aria-live="polite" aria-atomic="true"></div>
+          <div id="choices" class="choices"></div>
+          <div class="dialogue-footer"><span id="control-hint">空格 / Enter 继续</span><button id="continue-button" class="continue-button">继续<span aria-hidden="true">◇</span></button></div>
+        </section>
+        <div class="chapter-track" aria-label="故事进程"><span data-track="1">来访</span><span data-track="2">许立</span><span data-track="3">丁禾</span><span data-track="4">你</span><span data-track="5">次日</span></div>
+      </div>
+    </section>
+
+    <section id="end-screen" class="end-screen" hidden aria-label="试玩结束">
+      <div class="end-content">
+        <p class="eyebrow">第一幕 · 完</p>
+        <h2>今天，<br>先到这里。</h2>
+        <p class="ending-copy" id="ending-copy"></p>
+        <div id="ending-note" class="ending-note"></div>
+        <p class="end-postscript" id="end-postscript"></p>
+        <div class="end-actions"><button class="primary-button" id="replay-button">再过一次这个下午</button><button class="secondary-button" id="ending-notebook">翻看工作记录</button></div>
+        <p class="end-meta">本 demo 到这里结束。人物与故事仍在打磨中。</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="people-dialog" class="people-dialog" aria-labelledby="people-title">
+    <div class="notebook-head"><div><p class="eyebrow">介绍所里的人</p><h2 id="people-title">人物与关系</h2></div><button class="close-button" id="close-people" aria-label="关闭人物介绍">×</button></div>
+    <p class="people-relations">你扮演周行，接待许立和丁禾；澄是与你共事的 AI 同事。许立和丁禾是同街区的熟人，偶尔一起吃早餐，今天各自来访。</p>
+    <div id="people-list"></div>
+  </dialog>
+
+  <dialog id="notebook" class="notebook" aria-labelledby="notebook-title">
+    <div class="notebook-head"><div><p class="eyebrow">周行的工作本</p><h2 id="notebook-title">他们的请求，你的回应</h2></div><button class="close-button" id="close-notebook" aria-label="关闭工作记录">×</button></div>
+    <div class="notebook-tabs" role="tablist" aria-label="记录类型"><button id="promises-tab" role="tab" aria-selected="true" aria-controls="promises-view">请求与回应</button><button id="history-tab" role="tab" aria-selected="false" aria-controls="history-view">谈话记录</button></div>
+    <div id="promises-view" role="tabpanel" aria-labelledby="promises-tab"></div>
+    <div id="history-view" role="tabpanel" aria-labelledby="history-tab" hidden></div>
+    <p class="notebook-foot">这本工作记录只属于本次试玩。</p>
+  </dialog>
+
+  <dialog id="object-dialog" class="object-dialog" aria-labelledby="object-title"><button class="close-button" id="close-object" aria-label="关闭观察">×</button><p class="eyebrow">大厅里的东西</p><h2 id="object-title"></h2><p id="object-copy"></p><button id="object-back" class="secondary-button">回到谈话</button></dialog>
+  <dialog id="restart-dialog" class="restart-dialog" aria-labelledby="restart-title"><h2 id="restart-title">回到这个下午的开始？</h2><p>这次的选择和谈话记录会清空。</p><div class="end-actions"><button id="cancel-restart" class="secondary-button">继续留下</button><button id="confirm-restart" class="primary-button">重新开始</button></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript">请开启 JavaScript 后试玩《无用之城》。</p></noscript>
+</body>
+</html>
